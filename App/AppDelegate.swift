@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  App
+//  Albums
 //
-//  Created by Użytkownik Gość on 03.11.2016.
+//  Created by Użytkownik Gość on 13.10.2016.
 //  Copyright © 2016 Użytkownik Gość. All rights reserved.
 //
 
@@ -12,10 +12,11 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        // Override point for customization after application launch.        
         return true
     }
 
