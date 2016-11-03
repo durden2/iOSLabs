@@ -43,7 +43,7 @@ class ViewController: UIViewController {
         yearTextField.text = String((albums?[currentRecord]["date"]!)!);
         RatingChange.value = (albums?[currentRecord]["rating"] as! Double);
         pListLength = (albums?.count)!;
-        pListLength--;
+        pListLength = pListLength - 2;
         allRecordsCount.text = String(pListLength++);
         currentRecordCount.text = String(currentRecord);
         BtnSave.enabled = false;
@@ -58,11 +58,13 @@ class ViewController: UIViewController {
     }
     
     @IBAction func changeRecordLeft(sender: UIButton) {
+        print(currentRecord);
         if (currentRecord == 0){
             currentRecord = 0;
             changeRecordLeft.enabled = false;
         } else {
             currentRecord--;
+            changeRecordLeft.enabled = true;
         };
         
         artistTextField.text = albums?[currentRecord]["artist"] as? String;
@@ -75,22 +77,39 @@ class ViewController: UIViewController {
     
 
     @IBAction func changeRecordRight(sender: UIButton) {
+        print(currentRecord);
         if (currentRecord == pListLength) {
             currentRecord = pListLength;
-            changeRecordRight.enabled = false;
+            changeRecordRight.enabled = false;            
+            artistTextField.text = "";
+            titleTextField.text = "";
+            genereTextField.text = "";
+            ratingValueShow.text = "";
+            yearTextField.text = "";
+            BtnSave.enabled = true;
+            
         } else {
             currentRecord++;
-        };
-        artistTextField.text = albums?[currentRecord]["artist"] as? String;
-        titleTextField.text = albums?[currentRecord]["title"] as? String;
-        genereTextField.text = albums?[currentRecord]["genre"] as? String;
-        ratingValueShow.text = String((albums?[currentRecord]["rating"]!)!);
-        yearTextField.text = String((albums?[currentRecord]["date"]!)!);
-        currentRecordCount.text = String(currentRecord);
+            changeRecordLeft.enabled = true;
+        
+            artistTextField.text = albums?[currentRecord]["artist"] as? String;
+            titleTextField.text = albums?[currentRecord]["title"] as? String;
+            genereTextField.text = albums?[currentRecord]["genre"] as? String;
+            ratingValueShow.text = String((albums?[currentRecord]["rating"]!)!);
+            yearTextField.text = String((albums?[currentRecord]["date"]!)!);
+            currentRecordCount.text = String(currentRecord);
+        }
     }
     
     @IBAction func changeStepper(sender: UIStepper) {
         let StepperValue = RatingChange.value;
         ratingValueShow.text = String(Int(StepperValue));
+    }
+    
+    
+    @IBAction func btnSaveAction(sender: UIButton) {
+        let artist = artistTextField.text;
+        print(artist);
+        //  .addObject
     }
 }
