@@ -67,7 +67,8 @@ class ViewController: UIViewController {
             currentRecord -= 1;
             changeRecordLeft.enabled = true;
         };
-        
+        BtnNew.enabled = true;
+        BtnDelete.enabled = true;
         artistTextField.text = albums[currentRecord]["artist"] as? String;
         titleTextField.text = albums[currentRecord]["title"] as? String;
         genereTextField.text = albums[currentRecord]["genre"] as? String;
@@ -78,7 +79,6 @@ class ViewController: UIViewController {
     
 
     @IBAction func changeRecordRight(sender: UIButton) {
-        print(currentRecord);
         if (currentRecord == pListLength) {
             currentRecord = pListLength;
             changeRecordRight.enabled = false;            
@@ -94,6 +94,8 @@ class ViewController: UIViewController {
         } else {
             currentRecord += 1;
             changeRecordLeft.enabled = true;
+            BtnNew.enabled = true;
+            BtnDelete.enabled = true;
         
             artistTextField.text = albums[currentRecord]["artist"] as? String;
             titleTextField.text = albums[currentRecord]["title"] as? String;
