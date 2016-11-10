@@ -29,14 +29,16 @@ class ViewController: UIViewController {
     
     var currentRecord = 0;
     var pListLength = 5;
+    var plistCatPath = "";
     
     var albums: NSMutableArray = [];
     
     override func viewDidLoad() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.saveDataToFile), name: UIApplicationWillResignActiveNotification, object: nil)
         RatingChange.minimumValue = 0;
         RatingChange.maximumValue = 5;
-        let plistCatPath = NSBundle.mainBundle().pathForResource("Albums", ofType: "plist");
-        albums = NSMutableArray(contentsOfFile:plistCatPath!)!;
+        plistCatPath = NSBundle.mainBundle().pathForResource("Albums", ofType: "plist")!;
+        albums = NSMutableArray(contentsOfFile:plistCatPath)!;
         artistTextField.text = albums[currentRecord]["artist"] as? String;
         titleTextField.text = albums[currentRecord]["title"] as? String;
         genereTextField.text = albums[currentRecord]["genre"] as? String;
@@ -49,6 +51,11 @@ class ViewController: UIViewController {
         currentRecordCount.text = String(currentRecord);
         BtnSave.enabled = false;
         changeRecordLeft.enabled = false;
+        artistTextField.addTarget(self, action: #selector(ViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged);
+        titleTextField.addTarget(self, action: #selector(ViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged);
+        genereTextField.addTarget(self, action: #selector(ViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged);
+        RatingChange.addTarget(self, action: #selector(ViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged);
+        yearTextField.addTarget(self, action: #selector(ViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged);
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -58,8 +65,10 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func textFieldDidChange(textField: UITextField) {
+        BtnSave.enabled = true;
+    }
     @IBAction func changeRecordLeft(sender: UIButton) {
-        print(currentRecord);
         if (currentRecord == 0){
             currentRecord = 0;
             changeRecordLeft.enabled = false;
@@ -67,6 +76,7 @@ class ViewController: UIViewController {
             currentRecord -= 1;
             changeRecordLeft.enabled = true;
         };
+        changeRecordRight.enabled = true;
         BtnNew.enabled = true;
         BtnDelete.enabled = true;
         artistTextField.text = albums[currentRecord]["artist"] as? String;
@@ -81,7 +91,8 @@ class ViewController: UIViewController {
     @IBAction func changeRecordRight(sender: UIButton) {
         if (currentRecord == pListLength) {
             currentRecord = pListLength;
-            changeRecordRight.enabled = false;            
+            changeRecordRight.enabled = false;
+            RatingChange.value = 3;
             artistTextField.text = "";
             titleTextField.text = "";
             genereTextField.text = "";
@@ -123,7 +134,10 @@ class ViewController: UIViewController {
                     "title": titleTextField.text!
                 ]
             )
-            albums.addObject(newRecord)
+            print(newRecord);
+            albums.addObject(newRecord);
+            pListLength += 1;
+            currentRecord += 1;
             //recordCount.text = "Record \(currentRecord + 1) of \((albums.count))"
             
             
@@ -136,6 +150,9 @@ class ViewController: UIViewController {
             updatedRecord.setValue(titleTextField.text, forKey: "title")
         }
         
+        
+        changeRecordLeft.enabled = true;
+        changeRecordRight.enabled = true;
         BtnSave.enabled = false
         BtnDelete.enabled = true
         BtnNew.enabled = true
@@ -144,6 +161,9 @@ class ViewController: UIViewController {
         }
     }
     @IBAction func btnNewAction(sender: UIButton) {
+        RatingChange.value = 3;
+        changeRecordLeft.enabled = false;
+        changeRecordRight.enabled = false;
         artistTextField.text = "";
         titleTextField.text = "";
         genereTextField.text = "";
@@ -165,6 +185,10 @@ class ViewController: UIViewController {
             ]
         )
         albums.removeObject(newRecord);
+    }
+    
+    func saveDataToFile(){
+        albums.writeToFile(plistCatPath, atomically: true);
     }
     
     
