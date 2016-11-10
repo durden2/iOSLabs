@@ -29,20 +29,21 @@ class ViewController: UIViewController {
     
     var currentRecord = 0;
     var pListLength = 5;
-    var albums: NSArray?;
+    
+    var albums: NSMutableArray = [];
     
     override func viewDidLoad() {
         RatingChange.minimumValue = 0;
         RatingChange.maximumValue = 5;
         let plistCatPath = NSBundle.mainBundle().pathForResource("Albums", ofType: "plist");
-        albums = NSArray(contentsOfFile:plistCatPath!);
-        artistTextField.text = albums?[currentRecord]["artist"] as? String;
-        titleTextField.text = albums?[currentRecord]["title"] as? String;
-        genereTextField.text = albums?[currentRecord]["genre"] as? String;
-        ratingValueShow.text = String((albums?[currentRecord]["rating"]!)!);
-        yearTextField.text = String((albums?[currentRecord]["date"]!)!);
-        RatingChange.value = (albums?[currentRecord]["rating"] as! Double);
-        pListLength = (albums?.count)!;
+        albums = NSMutableArray(contentsOfFile:plistCatPath!)!;
+        artistTextField.text = albums[currentRecord]["artist"] as? String;
+        titleTextField.text = albums[currentRecord]["title"] as? String;
+        genereTextField.text = albums[currentRecord]["genre"] as? String;
+        ratingValueShow.text = String((albums[currentRecord]["rating"]!)!);
+        yearTextField.text = String((albums[currentRecord]["date"]!)!);
+        RatingChange.value = (albums[currentRecord]["rating"] as! Double);
+        pListLength = (albums.count);
         pListLength = pListLength - 2;
         allRecordsCount.text = String(pListLength++);
         currentRecordCount.text = String(currentRecord);
@@ -63,15 +64,15 @@ class ViewController: UIViewController {
             currentRecord = 0;
             changeRecordLeft.enabled = false;
         } else {
-            currentRecord--;
+            currentRecord -= 1;
             changeRecordLeft.enabled = true;
         };
         
-        artistTextField.text = albums?[currentRecord]["artist"] as? String;
-        titleTextField.text = albums?[currentRecord]["title"] as? String;
-        genereTextField.text = albums?[currentRecord]["genre"] as? String;
-        ratingValueShow.text = String((albums?[currentRecord]["rating"]!)!);
-        yearTextField.text = String((albums?[currentRecord]["date"]!)!);
+        artistTextField.text = albums[currentRecord]["artist"] as? String;
+        titleTextField.text = albums[currentRecord]["title"] as? String;
+        genereTextField.text = albums[currentRecord]["genre"] as? String;
+        ratingValueShow.text = String((albums[currentRecord]["rating"]!)!);
+        yearTextField.text = String((albums[currentRecord]["date"]!)!);
         currentRecordCount.text = String(currentRecord);
     }
     
@@ -87,16 +88,18 @@ class ViewController: UIViewController {
             ratingValueShow.text = "";
             yearTextField.text = "";
             BtnSave.enabled = true;
+            BtnDelete.enabled = false;
+            BtnNew.enabled = false;
             
         } else {
-            currentRecord++;
+            currentRecord += 1;
             changeRecordLeft.enabled = true;
         
-            artistTextField.text = albums?[currentRecord]["artist"] as? String;
-            titleTextField.text = albums?[currentRecord]["title"] as? String;
-            genereTextField.text = albums?[currentRecord]["genre"] as? String;
-            ratingValueShow.text = String((albums?[currentRecord]["rating"]!)!);
-            yearTextField.text = String((albums?[currentRecord]["date"]!)!);
+            artistTextField.text = albums[currentRecord]["artist"] as? String;
+            titleTextField.text = albums[currentRecord]["title"] as? String;
+            genereTextField.text = albums[currentRecord]["genre"] as? String;
+            ratingValueShow.text = String((albums[currentRecord]["rating"]!)!);
+            yearTextField.text = String((albums[currentRecord]["date"]!)!);
             currentRecordCount.text = String(currentRecord);
         }
     }
@@ -108,8 +111,59 @@ class ViewController: UIViewController {
     
     
     @IBAction func btnSaveAction(sender: UIButton) {
-        let artist = artistTextField.text;
-        print(artist);
-        //  .addObject
+        if(currentRecord >= pListLength) {
+            let newRecord = NSMutableDictionary(dictionary:
+                [
+                    "artist": artistTextField.text!,
+                    "date": yearTextField.text!,
+                    "genre": genereTextField.text!,
+                    "rating": ratingValueShow.text!,
+                    "title": titleTextField.text!
+                ]
+            )
+            albums.addObject(newRecord)
+            //recordCount.text = "Record \(currentRecord + 1) of \((albums.count))"
+            
+            
+        } else {
+            let updatedRecord:NSMutableDictionary = albums[currentRecord] as! NSMutableDictionary
+            updatedRecord.setValue(artistTextField.text!, forKey: "artist")
+            updatedRecord.setValue(yearTextField.text, forKey: "date")
+            updatedRecord.setValue(genereTextField.text, forKey: "genre")
+            updatedRecord.setValue(ratingValueShow.text, forKey: "rating")
+            updatedRecord.setValue(titleTextField.text, forKey: "title")
+        }
+        
+        BtnSave.enabled = false
+        BtnDelete.enabled = true
+        BtnNew.enabled = true
+        if (currentRecord > 0) {
+            changeRecordLeft.enabled = true
+        }
     }
+    @IBAction func btnNewAction(sender: UIButton) {
+        artistTextField.text = "";
+        titleTextField.text = "";
+        genereTextField.text = "";
+        ratingValueShow.text = "";
+        yearTextField.text = "";
+        BtnSave.enabled = true;
+        BtnDelete.enabled = false;
+        BtnNew.enabled = false;
+    }
+    
+    @IBAction func btnDeleteAction(sender: UIButton) {
+        let newRecord = NSMutableDictionary(dictionary:
+            [
+                "artist": artistTextField.text!,
+                "date": yearTextField.text!,
+                "genre": genereTextField.text!,
+                "rating": ratingValueShow.text!,
+                "title": titleTextField.text!
+            ]
+        )
+        albums.removeObject(newRecord);
+    }
+    
+    
 }

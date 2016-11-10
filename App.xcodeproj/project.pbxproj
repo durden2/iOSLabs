@@ -14,8 +14,8 @@
 		AC0750FB1DCB1D61001DDA12 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC0750F91DCB1D61001DDA12 /* LaunchScreen.storyboard */; };
 		AC0751061DCB1D61001DDA12 /* AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0751051DCB1D61001DDA12 /* AppTests.swift */; };
 		AC0751111DCB1D61001DDA12 /* AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0751101DCB1D61001DDA12 /* AppUITests.swift */; };
-		AC07511F1DCB2BBE001DDA12 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC07511E1DCB2BBE001DDA12 /* Action.swift */; settings = {ASSET_TAGS = (); }; };
-		AC0751211DCB2BFF001DDA12 /* Albums.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC0751201DCB2BFF001DDA12 /* Albums.plist */; settings = {ASSET_TAGS = (); }; };
+		AC07511F1DCB2BBE001DDA12 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC07511E1DCB2BBE001DDA12 /* Action.swift */; };
+		AC0751211DCB2BFF001DDA12 /* Albums.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC0751201DCB2BFF001DDA12 /* Albums.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -198,13 +198,16 @@
 				TargetAttributes = {
 					AC0750EC1DCB1D61001DDA12 = {
 						CreatedOnToolsVersion = 7.0.1;
+						LastSwiftMigration = 0800;
 					};
 					AC0751001DCB1D61001DDA12 = {
 						CreatedOnToolsVersion = 7.0.1;
+						LastSwiftMigration = 0800;
 						TestTargetID = AC0750EC1DCB1D61001DDA12;
 					};
 					AC07510B1DCB1D61001DDA12 = {
 						CreatedOnToolsVersion = 7.0.1;
+						LastSwiftMigration = 0800;
 						TestTargetID = AC0750EC1DCB1D61001DDA12;
 					};
 				};
@@ -408,6 +411,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = AGH.App;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -419,6 +423,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = AGH.App;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};
@@ -430,6 +435,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = AGH.AppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/App.app/App";
 			};
 			name = Debug;
@@ -442,6 +448,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = AGH.AppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/App.app/App";
 			};
 			name = Release;
@@ -453,6 +460,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = AGH.AppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_TARGET_NAME = App;
 				USES_XCTRUNNER = YES;
 			};
@@ -465,6 +473,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = AGH.AppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_TARGET_NAME = App;
 				USES_XCTRUNNER = YES;
 			};
